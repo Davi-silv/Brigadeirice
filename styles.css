@@ -414,6 +414,113 @@ ul {
   min-height: 100%;
 }
 
+/* Catálogo */
+.catalogo {
+  padding: var(--section-y) var(--page-x);
+  background:
+    linear-gradient(180deg, #efe4d8 0%, var(--cream) 35%, #f3e8dc 100%);
+}
+
+.catalogo__intro {
+  max-width: 40rem;
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+
+.catalogo__intro h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--chocolate);
+  margin-bottom: 1.15rem;
+}
+
+.catalogo__intro h2 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--chocolate-soft);
+}
+
+.catalogo__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.catalogo__group {
+  min-width: 0;
+}
+
+.catalogo__head {
+  margin-bottom: 1.35rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--chocolate) 14%, transparent);
+}
+
+.catalogo__eyebrow {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 0.45rem;
+}
+
+.catalogo__head h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3.5vw, 2.35rem);
+  font-weight: 600;
+  color: var(--chocolate);
+  line-height: 1.15;
+}
+
+.catalogo__group--gourmet .catalogo__eyebrow {
+  color: var(--gold);
+}
+
+.catalogo__list {
+  display: grid;
+  gap: 0;
+}
+
+.catalogo__group--gourmet .catalogo__list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.catalogo__list li {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--chocolate) 10%, transparent);
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.catalogo__list li span {
+  display: inline;
+  font-weight: 400;
+  color: color-mix(in srgb, var(--ink) 58%, transparent);
+}
+
+.catalogo__cta {
+  margin-top: clamp(2.5rem, 6vw, 3.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid color-mix(in srgb, var(--chocolate) 12%, transparent);
+}
+
+.catalogo__cta p {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+  font-style: italic;
+  color: var(--chocolate-soft);
+}
+
 /* Essência */
 .essencia {
   display: grid;
@@ -676,7 +783,8 @@ ul {
 
   .sabores,
   .essencia,
-  .historia {
+  .historia,
+  .catalogo__grid {
     grid-template-columns: 1fr;
   }
 
@@ -700,8 +808,13 @@ ul {
 
   .essencia__list h2,
   .sabores__intro h2,
-  .historia__copy h2 {
+  .historia__copy h2,
+  .catalogo__intro h2 {
     max-width: none;
+  }
+
+  .catalogo__group--gourmet .catalogo__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .pillars li {
@@ -875,8 +988,18 @@ ul {
   .essencia__list h2,
   .sabores__intro h2,
   .historia__copy h2,
-  .pedido__panel h2 {
+  .pedido__panel h2,
+  .catalogo__intro h2 {
     font-size: clamp(1.85rem, 9vw, 2.4rem);
+  }
+
+  .catalogo__group--gourmet .catalogo__list {
+    grid-template-columns: 1fr;
+  }
+
+  .catalogo__list li {
+    font-size: 0.95rem;
+    padding: 0.78rem 0;
   }
 
   .script {
