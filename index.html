@@ -67,61 +67,184 @@
       <div class="catalogo__intro" data-reveal>
         <p class="section-label">Catálogo</p>
         <h2>Escolha o sabor<br /><em>do seu momento.</em></h2>
-        <p class="section-copy">Cardápio completo da Brigadeirice, em duas linhas: o clássico que conquista e o gourmet que surpreende.</p>
+        <p class="section-copy">Toque nos sabores desejados e envie o pedido direto pelo WhatsApp.</p>
       </div>
 
-      <div class="catalogo__grid" data-reveal>
-        <article class="catalogo__group">
-          <header class="catalogo__head">
-            <p class="catalogo__eyebrow">Linha clássica</p>
-            <h3>Sabores tradicionais</h3>
-          </header>
-          <ul class="catalogo__list">
-            <li>Brigadeiro Tradicional</li>
-            <li>Beijinho de coco</li>
-            <li>Bicho de pé <span>(morango)</span></li>
-            <li>Casadinho <span>(ninho com brigadeiro)</span></li>
-            <li>Ninho com morango <span>(casadinho)</span></li>
-          </ul>
-        </article>
+      <form class="catalogo__form" id="pedido-form" data-reveal>
+        <div class="catalogo__grid">
+          <fieldset class="catalogo__group">
+            <legend class="catalogo__head">
+              <span class="catalogo__eyebrow">Linha clássica</span>
+              <span class="catalogo__title">Sabores tradicionais</span>
+            </legend>
+            <div class="catalogo__list">
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Brigadeiro Tradicional" data-linha="tradicional" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Brigadeiro Tradicional</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Beijinho de coco" data-linha="tradicional" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Beijinho de coco</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Bicho de pé (morango)" data-linha="tradicional" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Bicho de pé <span>(morango)</span></span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Casadinho (ninho com brigadeiro)" data-linha="tradicional" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Casadinho <span>(ninho com brigadeiro)</span></span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Ninho com morango (casadinho)" data-linha="tradicional" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Ninho com morango <span>(casadinho)</span></span>
+              </label>
+            </div>
+          </fieldset>
 
-        <article class="catalogo__group catalogo__group--gourmet">
-          <header class="catalogo__head">
-            <p class="catalogo__eyebrow">Linha especial</p>
-            <h3>Sabores gourmet</h3>
-          </header>
-          <ul class="catalogo__list">
-            <li>Brigadeiro gourmet</li>
-            <li>Ninho com Nutella</li>
-            <li>Ferrero Rocher</li>
-            <li>Romeu e Julieta</li>
-            <li>Churros</li>
-            <li>Prestígio</li>
-            <li>Coco queimado</li>
-            <li>Morango com Nutella</li>
-            <li>Chocolate 50%</li>
-            <li>Chocolate 100%</li>
-            <li>Paçoca</li>
-            <li>M&amp;M</li>
-            <li>Napolitano</li>
-            <li>Café</li>
-            <li>Torta de limão</li>
-            <li>Surpresa de uva</li>
-            <li>Sensação <span>(chocolate e morango)</span></li>
-            <li>Maracujá</li>
-            <li>Crème Brûlée</li>
-            <li>Queijo Brûlée</li>
-            <li>Oreo</li>
-            <li>Limão</li>
-            <li>Milho</li>
-          </ul>
-        </article>
-      </div>
+          <fieldset class="catalogo__group catalogo__group--gourmet">
+            <legend class="catalogo__head">
+              <span class="catalogo__eyebrow">Linha especial</span>
+              <span class="catalogo__title">Sabores gourmet</span>
+            </legend>
+            <div class="catalogo__list">
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Brigadeiro gourmet" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Brigadeiro gourmet</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Ninho com Nutella" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Ninho com Nutella</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Ferrero Rocher" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Ferrero Rocher</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Romeu e Julieta" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Romeu e Julieta</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Churros" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Churros</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Prestígio" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Prestígio</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Coco queimado" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Coco queimado</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Morango com Nutella" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Morango com Nutella</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Chocolate 50%" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Chocolate 50%</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Chocolate 100%" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Chocolate 100%</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Paçoca" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Paçoca</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="M&M" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">M&amp;M</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Napolitano" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Napolitano</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Café" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Café</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Torta de limão" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Torta de limão</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Surpresa de uva" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Surpresa de uva</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Sensação (chocolate e morango)" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Sensação <span>(chocolate e morango)</span></span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Maracujá" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Maracujá</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Crème Brûlée" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Crème Brûlée</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Queijo Brûlée" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Queijo Brûlée</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Oreo" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Oreo</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Limão" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Limão</span>
+              </label>
+              <label class="flavor">
+                <input type="checkbox" name="sabor" value="Milho" data-linha="gourmet" />
+                <span class="flavor__box" aria-hidden="true"></span>
+                <span class="flavor__text">Milho</span>
+              </label>
+            </div>
+          </fieldset>
+        </div>
 
-      <div class="catalogo__cta" data-reveal>
-        <p>Monte o mix ideal e peça pelo WhatsApp.</p>
-        <a class="btn btn--primary" href="#pedido">Fazer pedido</a>
-      </div>
+        <div class="catalogo__bar" id="pedido-bar">
+          <div class="catalogo__bar-copy">
+            <p class="catalogo__count" id="pedido-count">Nenhum sabor selecionado</p>
+            <p class="catalogo__hint" id="pedido-hint">Selecione ao menos um sabor para continuar.</p>
+          </div>
+          <div class="catalogo__bar-actions">
+            <button type="button" class="btn btn--ghost-dark" id="pedido-limpar" disabled>Limpar</button>
+            <button type="submit" class="btn btn--whatsapp" id="pedido-enviar" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.48-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/><path fill="currentColor" d="M12.04 2C6.5 2 2 6.48 2 12c0 1.77.46 3.45 1.28 4.92L2.05 22l5.25-1.38A9.96 9.96 0 0012.04 22C17.56 22 22 17.52 22 12S17.56 2 12.04 2zm0 18.13c-1.58 0-3.05-.43-4.32-1.18l-.31-.18-3.12.82.83-3.04-.2-.32A8.1 8.1 0 013.9 12c0-4.48 3.65-8.12 8.14-8.12 4.48 0 8.12 3.64 8.12 8.12 0 4.49-3.64 8.13-8.12 8.13z"/></svg>
+              Enviar pedido
+            </button>
+          </div>
+        </div>
+      </form>
     </section>
 
     <section class="essencia" id="essencia">
@@ -188,8 +311,8 @@
       <div class="pedido__panel" data-reveal>
         <p class="section-label section-label--light">Encomendas</p>
         <h2>Leve a Brigadeirice<br />para o seu momento.</h2>
-        <p class="section-copy">Caixas para presentear, festas e aquele mimo do dia a dia. Fale conosco e monte o pedido ideal.</p>
-        <a class="btn btn--whatsapp" href="https://wa.me/5522999315667" target="_blank" rel="noopener noreferrer">
+        <p class="section-copy">Selecione os sabores no catálogo ou fale direto conosco para montar o pedido ideal.</p>
+        <a class="btn btn--whatsapp js-whatsapp-order" href="https://wa.me/5522999315667" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.48-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/><path fill="currentColor" d="M12.04 2C6.5 2 2 6.48 2 12c0 1.77.46 3.45 1.28 4.92L2.05 22l5.25-1.38A9.96 9.96 0 0012.04 22C17.56 22 22 17.52 22 12S17.56 2 12.04 2zm0 18.13c-1.58 0-3.05-.43-4.32-1.18l-.31-.18-3.12.82.83-3.04-.2-.32A8.1 8.1 0 013.9 12c0-4.48 3.65-8.12 8.14-8.12 4.48 0 8.12 3.64 8.12 8.12 0 4.49-3.64 8.13-8.12 8.13z"/></svg>
           Pedir no WhatsApp
         </a>
