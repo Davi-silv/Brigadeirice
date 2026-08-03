@@ -1,0 +1,4 @@
+.vscode/
+.gimp-tmp/
+*.xcf
+.DS_Store
