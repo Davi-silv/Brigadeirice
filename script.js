@@ -1,4 +1,5 @@
 const WHATSAPP_NUMBER = "5522999315667";
+const MAX_QTY = 99;
 
 const header = document.querySelector(".site-header");
 const toggle = document.querySelector(".nav-toggle");
@@ -74,24 +75,54 @@ const orderHint = document.querySelector("#pedido-hint");
 const orderBar = document.querySelector("#pedido-bar");
 const orderClear = document.querySelector("#pedido-limpar");
 const orderSubmit = document.querySelector("#pedido-enviar");
-const flavorInputs = document.querySelectorAll('input[name="sabor"]');
-const whatsappLinks = document.querySelectorAll(".js-whatsapp-order");
+const flavorInputs = document.querySelectorAll(".flavor__input");
+
+const clampQty = (value) => {
+  const number = Number.parseInt(value, 10);
+  if (Number.isNaN(number) || number < 0) return 0;
+  return Math.min(MAX_QTY, number);
+};
+
+const setQty = (input, value) => {
+  const qty = clampQty(value);
+  input.value = String(qty);
+
+  const flavor = input.closest(".flavor");
+  const minus = flavor?.querySelector('[data-action="minus"]');
+  const plus = flavor?.querySelector('[data-action="plus"]');
+
+  flavor?.classList.toggle("is-selected", qty > 0);
+  if (minus) minus.disabled = qty <= 0;
+  if (plus) plus.disabled = qty >= MAX_QTY;
+
+  return qty;
+};
 
 const getSelectedFlavors = () => {
   const tradicionais = [];
   const gourmet = [];
+  let units = 0;
+  let kinds = 0;
 
   flavorInputs.forEach((input) => {
-    if (!input.checked) return;
+    const qty = clampQty(input.value);
+    if (!qty) return;
+
+    const item = { name: input.dataset.name || input.value, qty };
+    units += qty;
+    kinds += 1;
+
     if (input.dataset.linha === "tradicional") {
-      tradicionais.push(input.value);
+      tradicionais.push(item);
     } else {
-      gourmet.push(input.value);
+      gourmet.push(item);
     }
   });
 
-  return { tradicionais, gourmet, total: tradicionais.length + gourmet.length };
+  return { tradicionais, gourmet, units, kinds, total: units };
 };
+
+const formatItem = ({ name, qty }) => `${qty}x ${name}`;
 
 const buildWhatsAppMessage = ({ tradicionais, gourmet, total }) => {
   if (!total) {
@@ -102,16 +133,18 @@ const buildWhatsAppMessage = ({ tradicionais, gourmet, total }) => {
 
   if (tradicionais.length) {
     lines.push("*Sabores tradicionais:*");
-    tradicionais.forEach((sabor) => lines.push(`- ${sabor}`));
+    tradicionais.forEach((item) => lines.push(`- ${formatItem(item)}`));
     lines.push("");
   }
 
   if (gourmet.length) {
     lines.push("*Sabores gourmet:*");
-    gourmet.forEach((sabor) => lines.push(`- ${sabor}`));
+    gourmet.forEach((item) => lines.push(`- ${formatItem(item)}`));
     lines.push("");
   }
 
+  lines.push(`*Total de doces:* ${total}`);
+  lines.push("");
   lines.push("Aguardo o retorno para finalizar o pedido. 🙂");
   return lines.join("\n");
 };
@@ -123,35 +156,32 @@ const buildWhatsAppUrl = (selection) => {
 
 const updateOrderUI = () => {
   const selection = getSelectedFlavors();
-  const { total } = selection;
-  const ready = total > 0;
+  const { units, kinds } = selection;
+  const ready = units > 0;
 
-  flavorInputs.forEach((input) => {
-    input.closest(".flavor")?.classList.toggle("is-selected", input.checked);
-  });
+  flavorInputs.forEach((input) => setQty(input, input.value));
 
   if (orderCount) {
-    orderCount.textContent =
-      total === 0
-        ? "Nenhum sabor selecionado"
-        : total === 1
-          ? "1 sabor selecionado"
-          : `${total} sabores selecionados`;
+    if (!units) {
+      orderCount.textContent = "Nenhum doce selecionado";
+    } else if (units === 1) {
+      orderCount.textContent = "1 doce selecionado";
+    } else if (kinds === 1) {
+      orderCount.textContent = `${units} doces do mesmo sabor`;
+    } else {
+      orderCount.textContent = `${units} doces · ${kinds} sabores`;
+    }
   }
 
   if (orderHint) {
     orderHint.textContent = ready
       ? "Pronto! Envie o pedido pelo WhatsApp."
-      : "Selecione ao menos um sabor para continuar.";
+      : "Escolha a quantidade de ao menos um sabor.";
   }
 
   if (orderBar) orderBar.classList.toggle("is-ready", ready);
   if (orderClear) orderClear.disabled = !ready;
   if (orderSubmit) orderSubmit.disabled = !ready;
-
-  whatsappLinks.forEach((link) => {
-    link.href = buildWhatsAppUrl(selection);
-  });
 
   return selection;
 };
@@ -164,34 +194,45 @@ const openWhatsAppOrder = (event) => {
     return;
   }
 
-  const url = buildWhatsAppUrl(selection);
-
-  if (event.currentTarget instanceof HTMLAnchorElement) {
-    event.currentTarget.href = url;
-    return;
-  }
-
   event.preventDefault();
-  window.open(url, "_blank", "noopener,noreferrer");
+  window.open(buildWhatsAppUrl(selection), "_blank", "noopener,noreferrer");
 };
 
 if (orderForm) {
+  orderForm.addEventListener("click", (event) => {
+    const button = event.target.closest(".flavor__btn");
+    if (!button) return;
+
+    const flavor = button.closest(".flavor");
+    const input = flavor?.querySelector(".flavor__input");
+    if (!input) return;
+
+    const current = clampQty(input.value);
+    const next =
+      button.dataset.action === "plus" ? current + 1 : current - 1;
+
+    setQty(input, next);
+    updateOrderUI();
+  });
+
   flavorInputs.forEach((input) => {
-    input.addEventListener("change", updateOrderUI);
+    input.addEventListener("input", () => {
+      setQty(input, input.value);
+      updateOrderUI();
+    });
+
+    input.addEventListener("blur", () => {
+      setQty(input, input.value || 0);
+      updateOrderUI();
+    });
   });
 
   orderClear?.addEventListener("click", () => {
-    flavorInputs.forEach((input) => {
-      input.checked = false;
-    });
+    flavorInputs.forEach((input) => setQty(input, 0));
     updateOrderUI();
   });
 
   orderForm.addEventListener("submit", openWhatsAppOrder);
 }
-
-whatsappLinks.forEach((link) => {
-  link.addEventListener("click", openWhatsAppOrder);
-});
 
 updateOrderUI();
