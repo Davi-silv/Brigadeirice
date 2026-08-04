@@ -1,5 +1,12 @@
 const WHATSAPP_NUMBER = "5522999315667";
 const MAX_QTY = 99;
+const UNIT_PRICE = 3;
+const BOX_SIZE = 4;
+const BOX_PRICE = 12;
+const PRICE_CENTO = {
+  tradicional: 160,
+  gourmet: 250,
+};
 
 const header = document.querySelector(".site-header");
 const toggle = document.querySelector(".nav-toggle");
@@ -71,6 +78,8 @@ if ("IntersectionObserver" in window) {
 
 const orderForm = document.querySelector("#pedido-form");
 const orderCount = document.querySelector("#pedido-count");
+const orderPack = document.querySelector("#pedido-pack");
+const orderTotal = document.querySelector("#pedido-total");
 const orderHint = document.querySelector("#pedido-hint");
 const orderBar = document.querySelector("#pedido-bar");
 const orderClear = document.querySelector("#pedido-limpar");
@@ -82,6 +91,12 @@ const clampQty = (value) => {
   if (Number.isNaN(number) || number < 0) return 0;
   return Math.min(MAX_QTY, number);
 };
+
+const formatMoney = (value) =>
+  value.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
 const setQty = (input, value) => {
   const qty = clampQty(value);
@@ -108,7 +123,12 @@ const getSelectedFlavors = () => {
     const qty = clampQty(input.value);
     if (!qty) return;
 
-    const item = { name: input.dataset.name || input.value, qty };
+    const item = {
+      name: input.dataset.name || input.value,
+      qty,
+      total: qty * UNIT_PRICE,
+    };
+
     units += qty;
     kinds += 1;
 
@@ -119,31 +139,74 @@ const getSelectedFlavors = () => {
     }
   });
 
-  return { tradicionais, gourmet, units, kinds, total: units };
+  const boxes = Math.floor(units / BOX_SIZE);
+  const loose = units % BOX_SIZE;
+  const amount = units * UNIT_PRICE;
+
+  return {
+    tradicionais,
+    gourmet,
+    units,
+    kinds,
+    boxes,
+    loose,
+    total: units,
+    amount,
+  };
 };
 
 const formatItem = ({ name, qty }) => `${qty}x ${name}`;
 
-const buildWhatsAppMessage = ({ tradicionais, gourmet, total }) => {
+const formatPackSummary = ({ units, boxes, loose }) => {
+  if (!units) {
+    return `Caixinha com ${BOX_SIZE} unidades: ${formatMoney(BOX_PRICE)}`;
+  }
+
+  const parts = [];
+  if (boxes) {
+    parts.push(
+      boxes === 1
+        ? `1 caixinha (${BOX_SIZE} un.)`
+        : `${boxes} caixinhas (${boxes * BOX_SIZE} un.)`
+    );
+  }
+  if (loose) {
+    parts.push(loose === 1 ? "1 unidade avulsa" : `${loose} unidades avulsas`);
+  }
+
+  return parts.join(" + ");
+};
+
+const buildWhatsAppMessage = (selection) => {
+  const { tradicionais, gourmet, total, amount, boxes, loose } = selection;
+
   if (!total) {
     return "Olá! Gostaria de fazer um pedido na Brigadeirice.";
   }
 
-  const lines = ["Olá! Gostaria de fazer um pedido na Brigadeirice:", ""];
+  const lines = [
+    "Olá! Gostaria de fazer um pedido na Brigadeirice:",
+    "",
+    `*Tabela:* unidade ${formatMoney(UNIT_PRICE)} · caixinha com ${BOX_SIZE} = ${formatMoney(BOX_PRICE)}`,
+    `*Cento:* tradicionais R$ ${PRICE_CENTO.tradicional} · gourmet R$ ${PRICE_CENTO.gourmet}`,
+    "",
+  ];
 
   if (tradicionais.length) {
-    lines.push("*Sabores tradicionais:*");
+    lines.push(`*Sabores tradicionais* (cento R$ ${PRICE_CENTO.tradicional}):`);
     tradicionais.forEach((item) => lines.push(`- ${formatItem(item)}`));
     lines.push("");
   }
 
   if (gourmet.length) {
-    lines.push("*Sabores gourmet:*");
+    lines.push(`*Sabores gourmet* (cento R$ ${PRICE_CENTO.gourmet}):`);
     gourmet.forEach((item) => lines.push(`- ${formatItem(item)}`));
     lines.push("");
   }
 
   lines.push(`*Total de doces:* ${total}`);
+  lines.push(`*Montagem:* ${formatPackSummary({ units: total, boxes, loose })}`);
+  lines.push(`*Valor total:* ${formatMoney(amount)}`);
   lines.push("");
   lines.push("Aguardo o retorno para finalizar o pedido. 🙂");
   return lines.join("\n");
@@ -156,7 +219,7 @@ const buildWhatsAppUrl = (selection) => {
 
 const updateOrderUI = () => {
   const selection = getSelectedFlavors();
-  const { units, kinds } = selection;
+  const { units, kinds, amount, boxes, loose } = selection;
   const ready = units > 0;
 
   flavorInputs.forEach((input) => setQty(input, input.value));
@@ -173,9 +236,19 @@ const updateOrderUI = () => {
     }
   }
 
+  if (orderPack) {
+    orderPack.textContent = formatPackSummary({ units, boxes, loose });
+  }
+
+  if (orderTotal) {
+    orderTotal.textContent = ready
+      ? `Total: ${formatMoney(amount)}`
+      : `Total: ${formatMoney(0)}`;
+  }
+
   if (orderHint) {
     orderHint.textContent = ready
-      ? "Pronto! Envie o pedido pelo WhatsApp."
+      ? `Unidade ${formatMoney(UNIT_PRICE)} · caixinha ${formatMoney(BOX_PRICE)} · cento trad. R$ ${PRICE_CENTO.tradicional} · gourmet R$ ${PRICE_CENTO.gourmet}`
       : "Escolha a quantidade de ao menos um sabor.";
   }
 

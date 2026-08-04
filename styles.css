@@ -351,17 +351,17 @@ ul {
 /* Sabores */
 .sabores {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
-  gap: clamp(1.5rem, 5vw, 4rem);
-  align-items: center;
+  gap: clamp(2rem, 5vw, 3.25rem);
   padding: var(--section-y) var(--page-x);
   background:
-    radial-gradient(ellipse 60% 50% at 0% 50%, color-mix(in srgb, var(--rose) 10%, transparent), transparent 60%),
-    linear-gradient(160deg, var(--cream) 0%, #efe4d8 100%);
+    radial-gradient(ellipse 55% 45% at 85% 20%, color-mix(in srgb, var(--gold) 8%, transparent), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 0% 70%, color-mix(in srgb, var(--rose) 10%, transparent), transparent 60%),
+    linear-gradient(165deg, var(--cream) 0%, #efe4d8 100%);
 }
 
 .sabores__intro {
   min-width: 0;
+  max-width: 38rem;
 }
 
 .sabores__intro h2 {
@@ -379,39 +379,108 @@ ul {
   color: var(--chocolate-soft);
 }
 
-.sabores__gallery {
+.sabores__showcase {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
-  gap: 0.85rem;
-  align-items: stretch;
-  min-height: clamp(18rem, 48vw, 34rem);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(0.65rem, 1.4vw, 1rem);
   min-width: 0;
 }
 
-.sabores__hero,
-.sabores__side {
+.sabores__feature,
+.sabores__shot {
   margin: 0;
   overflow: hidden;
   position: relative;
   min-width: 0;
   min-height: 0;
+  grid-column: span 3;
+  aspect-ratio: 1 / 1;
+  opacity: 0;
+  transform: translateY(24px);
 }
 
-.sabores__hero img,
-.sabores__side img {
+.sabores__stack,
+.sabores__band {
+  display: contents;
+}
+
+/* Primeira fileira: 4 iguais | Segunda fileira: 3 iguais */
+.sabores__band .sabores__shot:nth-child(n + 2) {
+  grid-column: span 4;
+}
+
+.sabores__showcase.is-visible .sabores__feature,
+.sabores__showcase.is-visible .sabores__shot {
+  animation: sabor-rise 0.95s var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 85ms);
+}
+
+.sabores__feature::after,
+.sabores__shot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      transparent 55%,
+      color-mix(in srgb, var(--chocolate-deep) 18%, transparent) 100%
+    );
+  opacity: 0.55;
+  transition: opacity 0.5s ease;
+}
+
+.sabores__feature:hover::after,
+.sabores__shot:hover::after {
+  opacity: 0.25;
+}
+
+.sabores__feature img,
+.sabores__shot img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1.2s var(--ease);
+  object-position: center;
+  transform: scale(1.03);
+  transition: transform 1.35s var(--ease);
+  will-change: transform;
 }
 
-.sabores__hero:hover img,
-.sabores__side:hover img {
-  transform: scale(1.04);
+.sabores__feature:nth-child(1) img {
+  object-position: center 40%;
 }
 
-.sabores__side {
-  min-height: 100%;
+.sabores__stack .sabores__shot:first-child img {
+  object-position: center 35%;
+}
+
+.sabores__stack .sabores__shot:last-child img {
+  object-position: center 45%;
+}
+
+.sabores__band .sabores__shot:nth-child(1) img {
+  object-position: center 30%;
+}
+
+.sabores__band .sabores__shot:nth-child(4) img {
+  object-position: center 55%;
+}
+
+.sabores__feature:hover img,
+.sabores__shot:hover img {
+  transform: scale(1.07);
+}
+
+@keyframes sabor-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .btn--ghost-dark {
@@ -504,7 +573,31 @@ ul {
   line-height: 1.15;
 }
 
+.catalogo__price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--rose);
+}
+
+.catalogo__price small {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--chocolate) 55%, transparent);
+}
+
 .catalogo__group--gourmet .catalogo__eyebrow {
+  color: var(--gold);
+}
+
+.catalogo__group--gourmet .catalogo__price {
   color: var(--gold);
 }
 
@@ -643,6 +736,20 @@ ul {
   font-size: clamp(1.15rem, 2.4vw, 1.35rem);
   font-weight: 600;
   line-height: 1.2;
+}
+
+.catalogo__total {
+  margin-top: 0.2rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--gold-bright);
+}
+
+.catalogo__pack {
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  color: color-mix(in srgb, var(--cream) 72%, transparent);
 }
 
 .catalogo__hint {
@@ -905,7 +1012,9 @@ ul {
   .hero__img,
   .hero__content,
   .hero__scroll span,
-  [data-reveal] {
+  [data-reveal],
+  .sabores__feature,
+  .sabores__shot {
     animation: none !important;
     transition: none !important;
     opacity: 1 !important;
@@ -949,11 +1058,17 @@ ul {
     order: -1;
   }
 
-  .sabores__gallery {
-    min-height: 0;
-    height: clamp(16rem, 48vw, 26rem);
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
-    order: -1;
+  .sabores__showcase {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .sabores__feature,
+  .sabores__shot {
+    grid-column: span 3;
+  }
+
+  .sabores__band .sabores__shot:nth-child(n + 2) {
+    grid-column: span 4;
   }
 
   .essencia__list h2,
@@ -1112,21 +1227,20 @@ ul {
     display: none;
   }
 
-  .sabores__gallery {
-    grid-template-columns: 1fr;
-    height: auto;
-    gap: 0.75rem;
+  .sabores__showcase {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
   }
 
-  .sabores__hero,
-  .sabores__side {
-    aspect-ratio: 4 / 5;
-    min-height: 0;
-    height: auto;
+  .sabores__feature,
+  .sabores__shot,
+  .sabores__band .sabores__shot {
+    grid-column: span 1;
   }
 
-  .sabores__side {
-    aspect-ratio: 1 / 1;
+  /* Última imagem sozinha na fileira final, mesma largura das outras */
+  .sabores__band .sabores__shot:last-child {
+    grid-column: 1 / 2;
   }
 
   .essencia__media,
@@ -1228,9 +1342,9 @@ ul {
     transform: none;
   }
 
-  .sabores__hero:hover img,
-  .sabores__side:hover img {
-    transform: none;
+  .sabores__feature:hover img,
+  .sabores__shot:hover img {
+    transform: scale(1.03);
   }
 
   .flavor:hover {

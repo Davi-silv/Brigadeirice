@@ -53,13 +53,35 @@
         <h2>Cada brigadeiro,<br /><em>um detalhe a mais.</em></h2>
         <p class="section-copy">Do clássico ao gourmet — seleção artesanal, pronta para presentear ou saborear.</p>
       </div>
-      <div class="sabores__gallery" data-reveal>
-        <figure class="sabores__hero">
-          <img src="imagem/sabores.png" alt="Caixa com variedade de brigadeiros gourmet Brigadeirice" />
+
+      <div class="sabores__showcase" data-reveal>
+        <figure class="sabores__feature" style="--i:0">
+          <img src="imagem/sabores-variados.png" alt="Seleção variada de brigadeiros gourmet" loading="lazy" />
         </figure>
-        <figure class="sabores__side">
-          <img src="imagem/brigadeiro-2.png" alt="Close de brigadeiros tradicionais e brancos decorados" />
-        </figure>
+
+        <div class="sabores__stack">
+          <figure class="sabores__shot" style="--i:1">
+            <img src="imagem/sabores-tradicional.png" alt="Caixa de brigadeiros tradicionais com granulado" loading="lazy" />
+          </figure>
+          <figure class="sabores__shot" style="--i:2">
+            <img src="imagem/sabores-beijinho.png" alt="Brigadeiro tradicional e beijinho de coco" loading="lazy" />
+          </figure>
+        </div>
+
+        <div class="sabores__band">
+          <figure class="sabores__shot" style="--i:3">
+            <img src="imagem/sabores-romeu.png" alt="Docinhos Romeu e Julieta e Ninho" loading="lazy" />
+          </figure>
+          <figure class="sabores__shot" style="--i:4">
+            <img src="imagem/sabores-morango.png" alt="Brigadeiros de chocolate e bicho de pé" loading="lazy" />
+          </figure>
+          <figure class="sabores__shot" style="--i:5">
+            <img src="imagem/sabores-mix.png" alt="Mix de brigadeiros tradicionais e gourmet" loading="lazy" />
+          </figure>
+          <figure class="sabores__shot" style="--i:6">
+            <img src="imagem/sabores-trufa.png" alt="Trufas de chocolate com cacau" loading="lazy" />
+          </figure>
+        </div>
       </div>
     </section>
 
@@ -67,7 +89,7 @@
       <div class="catalogo__intro" data-reveal>
         <p class="section-label">Catálogo</p>
         <h2>Escolha o sabor<br /><em>do seu momento.</em></h2>
-        <p class="section-copy">Defina a quantidade de cada doce e envie o pedido direto pelo WhatsApp.</p>
+        <p class="section-copy">Defina a quantidade de cada doce e envie o pedido pelo WhatsApp. Unidade R$&nbsp;3 · caixinha com 4 unidades R$&nbsp;12. Cento: tradicionais R$&nbsp;160 · gourmet R$&nbsp;250.</p>
       </div>
 
       <form class="catalogo__form" id="pedido-form" data-reveal>
@@ -76,6 +98,7 @@
             <legend class="catalogo__head">
               <span class="catalogo__eyebrow">Linha clássica</span>
               <span class="catalogo__title">Sabores tradicionais</span>
+              <span class="catalogo__price">R$ 160 <small>o cento</small></span>
             </legend>
             <div class="catalogo__list">
               <div class="flavor" data-linha="tradicional">
@@ -190,6 +213,7 @@
             <legend class="catalogo__head">
               <span class="catalogo__eyebrow">Linha especial</span>
               <span class="catalogo__title">Sabores gourmet</span>
+              <span class="catalogo__price">R$ 250 <small>o cento</small></span>
             </legend>
             <div class="catalogo__list">
               <div class="flavor" data-linha="gourmet">
@@ -682,6 +706,8 @@
         <div class="catalogo__bar" id="pedido-bar">
           <div class="catalogo__bar-copy">
             <p class="catalogo__count" id="pedido-count">Nenhum doce selecionado</p>
+            <p class="catalogo__pack" id="pedido-pack">Caixinha com 4 unidades: R$ 12</p>
+            <p class="catalogo__total" id="pedido-total">Total: R$ 0,00</p>
             <p class="catalogo__hint" id="pedido-hint">Escolha a quantidade de ao menos um sabor.</p>
           </div>
           <div class="catalogo__bar-actions">
